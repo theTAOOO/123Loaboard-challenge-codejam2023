@@ -1,31 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React from 'react';
+import Map from './map';
 
-function App() {
+const coordinates = [
+  { lat: 37.7749, lng: -122.4194 }, // San Francisco
+  { lat: 34.0522, lng: -118.2437 }, // Los Angeles
+  // Add more coordinates as needed
+];
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <MyButton />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>React Google Maps Example</h1>
+      <Map coordinates={coordinates} />
     </div>
   );
-  
-}
-function MyButton() {
-  return (
-    <button>I'm a button</button>
-  );
-}
+};
+
 export default App;
