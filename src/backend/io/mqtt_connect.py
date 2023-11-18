@@ -3,7 +3,7 @@ import json
 from paho.mqtt import client as mqtt_client
 import time
 
-class MyConnection:
+class MQTTConnect:
     client = None
     connect_data = None
 
@@ -60,7 +60,3 @@ class MyConnection:
         print("Userdata: ", userdata)
         print("Received message '" + str(message.payload) + "' on topic '"
         + message.topic + "' with QoS " + str(message.qos))
-
-
-my_connection = MyConnection()
-my_connection.StartDay()
