@@ -9,7 +9,7 @@ class GlobalController:
     LoadBank = None
 
     def __init__(self):
-        self.MQTTController = MQTTController.MQTTConnect(self)
+        self.MQTTController = MQTTController.MQTTController(self)
         self.MessageHandler = MessageHandler.MessageHandler(self)
         self.TruckBank = TruckBank.TruckBank(self)
  
