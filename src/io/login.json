@@ -1,0 +1,11 @@
+{
+    "host": "fortuitous-welder.cloudmqtt.com",
+    "port": 1883,
+    "user": "CodeJamUser",
+    "password": "123CodeJam",
+    
+    "cleanSession": true,
+    "QoS": 1,
+    "clientId": "uuxd2x550hdwl9k47pcm4s",
+    "Topic": "CodeJam"
+}
