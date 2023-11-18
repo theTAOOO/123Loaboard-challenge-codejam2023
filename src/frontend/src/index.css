@@ -1,13 +1,28 @@
-body {
+body, html {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.map-title {
+  
+  position: 'absolute';
+  top: '5%';
+  left: '5%';
+  zIndex: '1';
+  textAlign: 'left';
+  color: 'black';
+  fontFamily: 'Helvetica';
+  fontSize: '60px';
+  fontWeight: 'bold';
+}
+
+.another-textbox {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 1;
+  text-align: left;
+  color: black;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 1em;
 }

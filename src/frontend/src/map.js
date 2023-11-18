@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-const Map = ({ coordinates }) => {
+const Map = ({ coordinates, title }) => {
   const [map, setMap] = useState(null);
 
   const mapStyles = {
-    height: '400px',
+    height: '100vh',
     width: '100%',
   };
 
@@ -29,6 +29,16 @@ const Map = ({ coordinates }) => {
     }
   }, [map, coordinates]);
 
+  const mapOptions = {
+    fullscreenControl: false, // Disable the fullscreen control
+    mapTypeControl: false,
+    rotateControl: false, // Disable the rotate control
+    scaleControl: false, // Disable the scale control
+    panControl: false, // Disable the pan control
+    streetViewControl: false,
+    zoomControl: false,
+  };
+
   return (
     <LoadScript
       googleMapsApiKey="AIzaSyDRTv4qJaBOqG-pA6yPYKbykJIjQ37bYjs"
@@ -38,6 +48,7 @@ const Map = ({ coordinates }) => {
         mapContainerStyle={mapStyles}
         center={defaultCenter}
         zoom={13}
+        options={mapOptions}
         onLoad={onLoad}
       >
         {coordinates.map((coord, index) => (
@@ -46,6 +57,36 @@ const Map = ({ coordinates }) => {
             position={{ lat: coord.lat, lng: coord.lng }}
           />
         ))}
+        <div
+          style={{
+            position: 'absolute',
+            top: '5%',
+            left: '5%',
+            zIndex: '1',
+            textAlign: 'left',
+            color: 'black',
+            fontFamily: 'Helvetica',
+            fontSize: '60px',
+            fontWeight: 'bold',
+          }}
+        >
+          {title}
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            top: '15%',
+            left: '7%',
+            zIndex: '1',
+            textAlign: 'left',
+            color: 'black',
+            fontFamily: 'Helvetica',
+            fontSize: '30px',
+            fontWeight: 'bold',
+          }}
+      >
+        We have a package for you to collect.
+      </div>
       </GoogleMap>
     </LoadScript>
   );

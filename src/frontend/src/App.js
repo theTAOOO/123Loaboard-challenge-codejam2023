@@ -11,8 +11,7 @@ const coordinates = [
 const App = () => {
   return (
     <div>
-      <h1>React Google Maps Example</h1>
-      <Map coordinates={coordinates} />
+      <Map coordinates={coordinates} title="Welcome back, Yumeng." />
     </div>
   );
 };
