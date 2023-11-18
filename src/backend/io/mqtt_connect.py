@@ -2,16 +2,17 @@ from datetime import datetime
 import json
 from paho.mqtt import client as mqtt_client
 from backend.io import ParseRequests
+from backend.structures import global_controller
 import time
 
 class MQTTConnect:
     client = None
     connect_data = None
+    global_controller = None
 
-    def __init__(self):
-        self.client = self.Connect()
+    def __init__(self, global_controller):
+        self.global_controller = global_controller
 
-    def Connect(self):
         with open('src/backend/io/login.json', 'r') as json_file:
             data = json.load(json_file)
 
@@ -30,23 +31,25 @@ class MQTTConnect:
         def on_disconnect(client, userdata, rc):
             print("Connection terminated!")
             print("Reconnecting...")
-            client.loop_start()
+            self.client.loop_start()
 
-        client = mqtt_client.Client(client_id=data["clientId"], clean_session=data["cleanSession"], userdata=None, protocol=mqtt_client.MQTTv31)
-        client.username_pw_set(data["user"], data["password"])
-        client.on_connect = on_connect
-        client.on_subscribe = on_subscribe
-        client.on_message = self.HandleRequest
-        client.on_disconnect = on_disconnect
+        self.client = mqtt_client.Client(client_id=data["clientId"], clean_session=data["cleanSession"], userdata=None, protocol=mqtt_client.MQTTv31)
+        self.client.username_pw_set(data["user"], data["password"])
+        self.client.on_connect = on_connect
+        self.client.on_subscribe = on_subscribe
+        self.client.on_message = self.HandleRequest
+        self.client.on_disconnect = on_disconnect
 
-        client.connect(data["host"], data["port"])
-        client.loop_start()
-        client.subscribe(data["Topic"], qos=data["QoS"])
+    def Connect(self):
+        with open('src/backend/io/login.json', 'r') as json_file:
+            data = json.load(json_file)
 
-        while not client.is_connected():
+        self.client.connect(data["host"], data["port"])
+        self.client.loop_start()
+        self.client.subscribe(data["Topic"], qos=data["QoS"])
+
+        while not self.client.is_connected():
             time.sleep(1)
 
-        return client
-
     def HandleRequest(self, client, userdata, message):
-        ParseRequests.MessageHandler.HandleIncomingMessage(message.payload.decode())
+        self.global_controller.MessageHandler.HandleIncomingMessage(message.payload.decode())
