@@ -5,10 +5,10 @@ def connectAPI():
     with open('maps_connect.json', 'r') as json_file:
         api_key = json.load(json_file)
 
-    with open('src/backend/io/file1.json', 'r') as startpoint:
+    with open('file1.json', 'r') as startpoint:
         data1 = json.load(startpoint)
 
-    with open('src/backend/io/file2.json', 'r') as endpoint:
+    with open('file2.json', 'r') as endpoint:
         data2 = json.load(endpoint)
 
     maps_client = googlemaps.Client(key=api_key["apiKey"])
