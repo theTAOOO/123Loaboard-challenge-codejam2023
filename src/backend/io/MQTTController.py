@@ -1,11 +1,11 @@
 from datetime import datetime
 import json
 from paho.mqtt import client as mqtt_client
-from backend.io import ParseRequests
-from backend.structures import global_controller
+from backend.io import MessageHandler
+from backend.structures import GlobalController
 import time
 
-class MQTTConnect:
+class MQTTController:
     client = None
     connect_data = None
     global_controller = None
