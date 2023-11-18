@@ -6,10 +6,10 @@ def ConnectAPI():
         data = json.load(json_file)
     api_key = data["apiKey"]
 
-    with open('file1.json', 'r') as startpoint:
+    with open('src/backend/io/file1.json', 'r') as startpoint:
         data1 = json.load(startpoint)
 
-    with open('file2.json', 'r') as endpoint:
+    with open('src/backend/io/file2.json', 'r') as endpoint:
         data2 = json.load(endpoint)
 
     start_lat = data1["positionLatitude"]
