@@ -25,12 +25,18 @@ class MQTTConnect:
         def on_subscribe(client, userdata, mid, granted_qos):
             print("Subscription successful!")
             print("Granted QoS: ", granted_qos)
+            
+        def on_disconnect(client, userdata, rc):
+            print("Connection terminated!")
+            print("Reconnecting...")
+            client.loop_start()
 
         client = mqtt_client.Client(client_id=data["clientId"], clean_session=data["cleanSession"], userdata=None, protocol=mqtt_client.MQTTv31)
         client.username_pw_set(data["user"], data["password"])
         client.on_connect = on_connect
         client.on_subscribe = on_subscribe
         client.on_message = self.HandleRequest
+        client.on_disconnect = on_disconnect
 
         client.connect(data["host"], data["port"])
         client.loop_start()
