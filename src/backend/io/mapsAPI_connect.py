@@ -2,7 +2,7 @@ import requests
 import json
 
 def ConnectAPI():
-    with open('src/io/mapsAPI.json', 'r') as json_file:
+    with open('src/backend/io/maps_connect.json', 'r') as json_file:
         data = json.load(json_file)
     api_key = data["apiKey"]
 
