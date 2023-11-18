@@ -1,6 +1,6 @@
 import json
-from backend.structures import global_controller
-from backend.structures import truck_bank
+from backend.structures import GlobalController
+from backend.structures import TruckBank
 
 class MessageHandler:
     global_controller = None

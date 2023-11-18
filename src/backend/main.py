@@ -1,12 +1,12 @@
 import sys
 sys.path.append('src')
 
-from backend.io import mqtt_connect
-from backend.structures import global_controller
+from backend.io import MQTTController
+from backend.structures import GlobalController
 import time
 
 def main():
-    my_controller = global_controller.GlobalController()
+    my_controller = GlobalController.GlobalController()
     my_controller.MQTTController.Connect()
     # while(True):
     #     continue
