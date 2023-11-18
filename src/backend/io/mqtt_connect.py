@@ -41,20 +41,6 @@ class MQTTConnect:
 
         return client
 
-    def StartDay(self):
-        if not self.client.is_connected():
-            raise Exception("[FATAL]: NOT CONNECTED") 
-
-        with open('src/backend/io/new_day.json', 'r') as json_file:
-            data = json.load(json_file)
-        data["timestamp"] = datetime.now().isoformat()
-
-        def on_publish(client, userdata, mid):
-            print("[Sent]: Start new day")
-
-        self.client.on_publish = on_publish
-        self.client.publish(self.connect_data["Topic"], json.dumps(data))
-
     def HandleRequest(self, client, userdata, message):
         print("Message Received!")
         print("Userdata: ", userdata)
