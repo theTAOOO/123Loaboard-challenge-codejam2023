@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 from paho.mqtt import client as mqtt_client
+from backend.io import ParseRequests
 import time
 
 class MQTTConnect:
@@ -48,7 +49,4 @@ class MQTTConnect:
         return client
 
     def HandleRequest(self, client, userdata, message):
-        print("Message Received!")
-        print("Userdata: ", userdata)
-        print("Received message '" + str(message.payload) + "' on topic '"
-        + message.topic + "' with QoS " + str(message.qos))
+        ParseRequests.MessageHandler.HandleIncomingMessage(message.payload.decode())
