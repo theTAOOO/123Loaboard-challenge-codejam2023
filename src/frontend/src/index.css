@@ -3,26 +3,9 @@ body, html {
   padding: 0;
 }
 
-.map-title {
-  
-  position: 'absolute';
-  top: '5%';
-  left: '5%';
-  zIndex: '1';
-  textAlign: 'left';
-  color: 'black';
-  fontFamily: 'Helvetica';
-  fontSize: '60px';
-  fontWeight: 'bold';
-}
-
-.another-textbox {
-  position: absolute;
-  top: 40px;
+.divmap {
+  margin: 0;
+  padding: 0;
   left: 0;
-  z-index: 1;
-  text-align: left;
-  color: black;
-  font-family: 'Helvetica', sans-serif;
-  font-size: 1em;
 }
+.gm-style iframe + div { border:none!important; }
