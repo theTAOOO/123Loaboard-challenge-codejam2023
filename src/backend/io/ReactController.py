@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_socketio import SocketIO
 
@@ -13,7 +13,9 @@ class ReactController:
         CORS(self.app)
         self.socketio = SocketIO(self.app)
         self.setup_routes()
-        self.app.run(debug=True)
+
+    def start_thread(self):
+        self.app.run(debug=False)
 
     def setup_routes(self):
         self.app.route('/api/data', methods=['GET'])(self.get_data)
