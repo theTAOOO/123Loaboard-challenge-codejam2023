@@ -6,7 +6,7 @@ class MessageHandler:
     def __init__(self, global_controller):
         self.global_controller = global_controller
 
-    def HandleIncomingMessage(self, message_payload_str):
+    def HandleMQTTIncomingMessage(self, message_payload_str):
         message_payload = json.loads(message_payload_str)
         if ("Truck" == message_payload["type"]):
             print("New Truck!")
