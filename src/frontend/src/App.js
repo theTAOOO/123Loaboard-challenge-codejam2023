@@ -1,6 +1,7 @@
 // App.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './index.css';
-import React from 'react';
 import Map from './map';
 import swift from "./swifttrack.png";
 
@@ -12,6 +13,18 @@ const coordinates = [
 ];
 
 const App = () => {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/data')
+        .then(response => {
+            setData(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}, []);
+
   return (
     <><div className="divmap">
       <Map coordinates={coordinates}/>
