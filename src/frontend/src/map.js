@@ -5,6 +5,7 @@ import quest from "./markeer.png";
 
 const Map = ({ coordinates }) => {
   const [map, setMap] = useState(null);
+  const [infoWindows, setInfoWindows] = useState([]);
 
   const mapStyles = {
     height: '100vh',
@@ -421,14 +422,19 @@ const Map = ({ coordinates }) => {
             scaledSize: new window.google.maps.Size(155/2, 214/2), // Adjust the width and height as needed
           },
         });
+        const infoWindow = new window.google.maps.InfoWindow({
+            content: `Marker ${index + 1} clicked!`, // You can customize the content here
+        });
 
         // Add a click event listener to the marker
-        marker.addListener('click', () => handleMarkerClick(index));
-
-        markers.push(marker);
-      });
-      
+        marker.addListener('click', () => {
+            infoWindow.open(newMap, marker);
+          });
   
+          markers.push(marker);
+        });
+
+
       // Calculate the bounds that encompass all markers
       const bounds = new window.google.maps.LatLngBounds();
       markers.forEach((marker) => {
