@@ -9,13 +9,12 @@ class ReactController:
     def __init__(self, global_controller):
         self.global_controller = global_controller
         self.app = Flask(__name__)
-        # CORS(self.app)
+        # Debug mode
         self.socketio = SocketIO(self.app, cors_allowed_origins="*", logger=True, engineio_logger=True)
         self.setup_routes()
 
     def start_thread(self):
         self.app.run(debug=False)
-        self.socketio.emit('message_from_server', 'Hello from the server!')
 
     def setup_routes(self):
         self.socketio.on('/api/data')(self.global_controller.MessageHandler.HandleFEIncomingMessage)

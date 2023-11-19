@@ -10,7 +10,6 @@ class TruckBank:
         self.global_controller = global_controller
         columns = ['ID', 'Timestamp', 'Latitude', 'Longitude', 'Vehicle Type', 'Trip Preference']
         self.truck_list = pd.DataFrame(columns=columns)
-        # self.logistics_optimizer = LogisticsOptimizer()
     
     def DeleteAll(self):
         self.truck_list = self.truck_list.drop(self.truck_list.index)
@@ -31,6 +30,7 @@ class TruckBank:
             if self.global_controller.EmulatedTruckID is not None and self.global_controller.EmulatedTruckID == int(new_truck['ID']):
                 self.global_controller.LogisticsOptimizer.UpdateLoads()
                 self.global_controller.MessageHandler.CreateOutgoingMsg(['UPD', 'TRUCK', list(new_truck.values())])
+            
             print("Updated existing truck!")
             return
         

@@ -28,7 +28,10 @@ class GlobalController:
         self.TruckBank.DeleteAll()
         self.LoadBank.DeleteAll()
     
+    # Demo purposes; we pretend to be a truck
     def SetEmulatedTruck(self):
+        # If we magically connect to the truck client before we connect to the MQTT
+        # server, which usually shouldn't happen
         while(self.TruckBank.truck_list.empty):
             time.sleep(1)
 
@@ -39,4 +42,6 @@ class GlobalController:
         # TODO: replace with async/await resp
         # Wait for them to receive it
         time.sleep(1)
+        
+        # "New" truck so fill with loads
         self.LogisticsOptimizer.UpdateLoads()
