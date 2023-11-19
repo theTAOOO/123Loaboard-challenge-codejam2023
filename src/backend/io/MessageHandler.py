@@ -1,6 +1,7 @@
 import json
 from backend.structures import GlobalController
 from backend.structures import TruckBank
+from backend.structures import LoadBank
 
 class MessageHandler:
     global_controller = None
@@ -30,8 +31,12 @@ class MessageHandler:
         self.global_controller.TruckBank.AddTruck(message_payload)
         return
     def HandleLoadMessage(self, message_payload):
+        self.global_controller.LoadBank.AddLoad(message_payload)
         return
     def HandleStartMessage(self, message_payload):
+        self.global_controller.StartDay()
+        # raise Exception("[FATAL]: UNHANDLED START DAY REQ", message_payload)
         return
     def HandleEndDayMessage(self, message_payload):
+        raise Exception("[FATAL]: UNHANDLED END DAY REQ", message_payload)
         return
