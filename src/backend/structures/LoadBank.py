@@ -1,7 +1,7 @@
 import pandas as pd
 
 class LoadBank:
-    GlobalController = None
+    global_controller = None
     load_list = None
 
     def __init__(self, global_controller):

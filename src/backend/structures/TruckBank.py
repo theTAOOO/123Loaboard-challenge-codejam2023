@@ -1,7 +1,7 @@
 import pandas as pd
 
 class TruckBank:
-    GlobalController = None
+    global_controller = None
     truck_list = None
 
     def __init__(self, global_controller):
