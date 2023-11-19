@@ -53,6 +53,7 @@ class MessageHandler:
     def HandleFEGetMsg(self, message):
         # structure: [Truck, ID, etc]
         if ("TRUCK" == message[0]):
+            self.global_controller.SetEmulatedTruck()
             return
         # elif ("LOAD" == message[0]):
         #     return
@@ -69,3 +70,11 @@ class MessageHandler:
         else:
             raise Exception("[FATAL]: UNKNOWN CLIENT GET REQ: ", message)
         return
+    
+    def CreateOutgoingMsg(self, message):
+        if ("SET" != message[0]):
+            raise Exception("[FATAL]: UNKNOWN OUTGOING REQ: ", message)
+        if ("LOAD" != message[1]):
+            raise Exception("[FATAL]: UNKNOWN OUTGOING REQ: ", message)
+
+        self.global_controller.ReactController.send_load(message[2])
