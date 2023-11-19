@@ -1,10 +1,9 @@
 // App.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './index.css';
 import Map from './map';
 import swift from "./swifttrack.png";
-
+import SocketComponent from './SocketComponent';
 
 const coordinates = [
   { lat: 37.7749, lng: -122.4194 }, // San Francisco
@@ -13,20 +12,12 @@ const coordinates = [
 ];
 
 const App = () => {
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/data')
-        .then(response => {
-            setData(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-}, []);
+  const [message, setMessage] = useState('');
+  const [receivedMessage, setReceivedMessage] = useState('');
 
   return (
     <><div className="divmap">
+      <SocketComponent />
       <Map coordinates={coordinates}/>
     </div><div className="divmap"
       style={{
