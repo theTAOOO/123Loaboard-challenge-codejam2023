@@ -52,4 +52,4 @@ class MQTTController:
             time.sleep(1)
 
     def HandleRequest(self, client, userdata, message):
-        self.global_controller.MessageHandler.HandleIncomingMessage(message.payload.decode())
+        self.global_controller.MessageHandler.HandleMQTTIncomingMessage(message.payload.decode())
