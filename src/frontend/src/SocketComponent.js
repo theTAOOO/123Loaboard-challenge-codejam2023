@@ -7,6 +7,7 @@ const SocketComponent = () => {
 
     socket.on('connect', () => {
       console.log('Connected to the server');
+      socket.timeout(5000).emit('/api/data', ['GET', 'Truck'] );
     });
 
     socket.on('message_from_server', (data) => {
