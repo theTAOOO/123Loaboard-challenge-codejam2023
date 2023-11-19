@@ -62,7 +62,9 @@ class MessageHandler:
     def HandleFESetMsg(self, message):
         # if ("TRUCK" == message[0]):
         #     return
+        # structure: [LOAD, ID, etc]
         if ("LOAD" == message[0]):
+            self.global_controller.LoadBank.DeleteLoad(message[1])
             return
         else:
             raise Exception("[FATAL]: UNKNOWN CLIENT GET REQ: ", message)

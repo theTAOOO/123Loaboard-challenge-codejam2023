@@ -32,3 +32,10 @@ class LoadBank:
             # self.load_list.loc[self.load_list["ID"] == new_row['ID']] = list(new_row.values())
             # print("Updated existing truck!")
         self.load_list = pd.concat([self.load_list, pd.DataFrame([new_load])], ignore_index=True)
+
+    def DeleteLoad(self, load_id):
+        # need to implement locking in future in case multiple truckers try to select at same time
+        if load_id in self.load_list['ID'].values:
+            raise Exception("[FATAL]: LOAD MAGICALLY DISAPPEARED????")
+        
+        self.load_list.drop(self.load_list.loc[self.load_list["ID"] == load_id], inplace=True)
