@@ -4,7 +4,7 @@ from backend.structures import TruckBank
 
 
 class LoadBank:
-    GlobalController = None
+    global_controller = None
     load_list = None
 
     def __init__(self, global_controller):
@@ -37,5 +37,9 @@ class LoadBank:
             # print("Updated existing truck!")
         self.load_list = pd.concat([self.load_list, pd.DataFrame([new_load])], ignore_index=True)
 
-        # self.logistics_optimizer.select_loads(TruckBank.truck_list, new_load)
-
+    def DeleteLoad(self, load_id):
+        # need to implement locking in future in case multiple truckers try to select at same time
+        if load_id in self.load_list['ID'].values:
+            raise Exception("[FATAL]: LOAD MAGICALLY DISAPPEARED????")
+        
+        self.load_list.drop(self.load_list.loc[self.load_list["ID"] == load_id], inplace=True)

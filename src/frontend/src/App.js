@@ -1,6 +1,5 @@
 // App.js
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './index.css';
 import React from 'react';
 import Map from './map';
@@ -14,12 +13,6 @@ const coordinates = [
 ];
 
 const App = () => {
-
-  return (
-    <><div >
-
-  const [message, setMessage] = useState('');
-  const [receivedMessage, setReceivedMessage] = useState('');
 
   return (
     <><div className="divmap">

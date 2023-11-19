@@ -28,20 +28,22 @@ class MessageHandler:
     def HandleTruckMessage(self, message_payload):
         self.global_controller.TruckBank.AddTruck(message_payload)
         return
-
+    
     def HandleLoadMessage(self, message_payload):
         self.global_controller.LoadBank.AddLoad(message_payload)
         return
-
+    
     def HandleStartMessage(self, message_payload):
         self.global_controller.StartDay()
         # raise Exception("[FATAL]: UNHANDLED START DAY REQ", message_payload)
         return
-
+    
     def HandleEndDayMessage(self, message_payload):
+        return
         raise Exception("[FATAL]: UNHANDLED END DAY REQ", message_payload)
         
     def HandleFEIncomingMessage(self, message):
+        # structure: [Get/Set, Truck, ID, etc]
         if ("GET" == message[0]):
             self.HandleFEGetMsg(message[1:])
         elif ("SET" == message[0]):
@@ -50,12 +52,34 @@ class MessageHandler:
             raise Exception("[FATAL]: UNKNOWN CLIENT MSG RECEIVED: ", message)
     
     def HandleFEGetMsg(self, message):
-        if ("Truck" == message[0]):
+        # structure: [Truck, ID, etc]
+        if ("TRUCK" == message[0]):
+            self.global_controller.SetEmulatedTruck()
             return
-        elif ("Load" == message[0]):
-            return
+        # elif ("LOAD" == message[0]):
+        #     return
         else:
             raise Exception("[FATAL]: UNKNOWN CLIENT GET REQ: ", message)
     
     def HandleFESetMsg(self, message):
+        # if ("TRUCK" == message[0]):
+        #     return
+        # structure: [LOAD, ID, etc]
+        if ("LOAD" == message[0]):
+            self.global_controller.LoadBank.DeleteLoad(message[1])
+            return
+        else:
+            raise Exception("[FATAL]: UNKNOWN CLIENT GET REQ: ", message)
         return
+    
+    def CreateOutgoingMsg(self, message):
+        if ("SET" == message[0]):
+            if ("TRUCK" == message[1] or "LOAD" == message[1] or "UPD" == message[1]):
+                self.global_controller.ReactController.send_msg(message)
+                return
+            
+        raise Exception("[FATAL]: UNKNOWN OUTGOING REQ: ", message)
+
+
+                
+
