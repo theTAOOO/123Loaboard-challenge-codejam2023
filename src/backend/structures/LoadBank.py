@@ -36,6 +36,7 @@ class LoadBank:
             # self.load_list.loc[self.load_list["ID"] == new_row['ID']] = list(new_row.values())
             # print("Updated existing truck!")
         self.load_list = pd.concat([self.load_list, pd.DataFrame([new_load])], ignore_index=True)
+        self.global_controller.LogisticsOptimizer.UpdateTrucks(new_load)
 
     def DeleteLoad(self, load_id):
         # need to implement locking in future in case multiple truckers try to select at same time

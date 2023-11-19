@@ -1,16 +1,20 @@
-import json
 import googlemaps
+import json
 import os
-from backend.structures import GlobalController
-
+import pandas as pd
 
 class LogisticsOptimizer:
-    def __init__(self):
+    global_controller = None
+    maps_client = None
+
+    def __init__(self, global_controller):
+        self.global_controller = global_controller
         script_dir = os.path.dirname(os.path.abspath(__file__))
         json_file_path = os.path.join(script_dir, 'maps_connect.json')
         with open(json_file_path, 'r') as json_file:
             api_key = json.load(json_file)
         self.maps_client = googlemaps.Client(key=api_key["apiKey"])
+        self.RunTests()
 
     def calculate_distance(self, origin, destination) -> (str, str):
         try:
@@ -49,9 +53,18 @@ class LogisticsOptimizer:
         else:
             return False
 
-    def select_trucks(self, truck_bank, load):
+    def select_trucks(self, load, truck_bank=None):
+        if (truck_bank is None):
+            truck_bank = self.global_controller.TruckBank.truck_list
+
+            if truck_bank.empty:
+                # we magically got a load before our first truck
+                return
+            
         to_notify = []
-        for truck in truck_bank:
+
+        for index, truck_row in truck_bank.iterrows():
+            truck = truck_row.tolist()
             if (truck[4] != load[6]) or (not self.check_preferences(truck, load)):
                 continue
             else:
@@ -63,9 +76,13 @@ class LogisticsOptimizer:
                     to_notify.append(truck)
         return sorted(to_notify, key=lambda x: x[-1], reverse=True)
 
-    def select_loads(self, truck, load_bank):
+    def select_loads(self, truck, load_bank=None):
+        if (load_bank is None):
+            load_bank = self.global_controller.LoadBank.load_list
+
         to_pick_up = []
-        for load in load_bank:
+        for index, load_row in load_bank.iterrows(): 
+            load = load_row.tolist()
             if (truck[4] != load[6]) or (not self.check_preferences(truck, load)):
                 continue
             else:
@@ -76,42 +93,63 @@ class LogisticsOptimizer:
                     load.append(profit)
                     to_pick_up.append(load)
         return sorted(to_pick_up, key=lambda x: x[-1], reverse=True)
+    
+    # Get list of loads for new truck
+    def UpdateLoads(self):
+        # We assume we're notifying the truck we're connected to
+        truck_list = self.global_controller.TruckBank.truck_list
+        emulated_truck_row = truck_list.loc[truck_list["ID"] == self.global_controller.EmulatedTruckID]
+        selected_loads = self.select_loads(emulated_truck_row)
 
+        for load in selected_loads:
+            self.global_controller.MessageHandler.CreateOutgoingMsg(['SET', 'LOAD', load])
+    
+    # Get list of trucks to notify
+    def UpdateTrucks(self, load):
+        selected_trucks = self.select_trucks(list(load))
+
+        if selected_trucks is None or selected_trucks.empty:
+            raise Exception("[FATAL]: UPDATE TRUCKS LIST EMPTY ")
+
+        for truck in selected_trucks:
+            if (truck[0] == self.global_controller.EmulatedTruckID):
+                self.global_controller.MessageHandler.CreateOutgoingMsg(['SET', 'LOAD', load])
+
+    def RunTests(self):
+        # Test the calculate_distance function
+        distance_result = self.calculate_distance((32.736137, -85.289268), (39.531354, -87.440632))
+        print(distance_result)
+
+        print(sample_loads)
+        print(sample_trucks)
+
+        # Test the calculate_profit function
+        profit_result = self.calculate_profit(sample_trucks.iloc[0], sample_loads.iloc[0])
+        print(profit_result)
+
+        # Test the check_preferences function
+        preferences_result = self.check_preferences(sample_trucks.iloc[0], sample_loads.iloc[0])
+        print(preferences_result)
+
+        # Test the select_trucks function
+        selected_trucks = self.select_trucks(sample_loads.iloc[0], sample_trucks)
+        print(selected_trucks)
+
+        # Test the select_loads function
+        selected_loads = self.select_loads(sample_trucks.iloc[0], sample_loads)
+        print(selected_loads)
 
 # Sample data for testing
-sample_trucks = [
+sample_trucks = pd.DataFrame([
     # Sample truck data: [truck_id, truck_type, origin_lat, origin_lng, capacity, preference]
     [326, '2023-11-18T20:25:41', 39.531354, -87.440632, 'Van', 'Short'],
     [339, '2023-11-18T20:26:48', 40.966309, -75.983070, 'Van', 'Short'],
     [101, '2023-11-18T20:28:01', 39.171665, -85.958260, 'Van', 'Long']
-]
+])
 
-sample_loads = [
+sample_loads = pd.DataFrame([
     [101, "2023-11-17T11:31:35.0481646-05:00", 41.425058, -87.33366, 39.531354, -87.440632, "Van", 13150.0, 147.0],
     [201, "2023-11-17T11:55:11.2311956-05:00", 41.621465, -83.605482, 37.639, -121.0052, "Van", 13300.0, 2334.0],
 
     # Add more sample loads as needed
-]
-
-# Instantiate the LogisticsOptimizer class
-logistics_optimizer = LogisticsOptimizer()
-
-# Test the calculate_distance function
-distance_result = logistics_optimizer.calculate_distance((32.736137, -85.289268), (39.531354, -87.440632))
-print(distance_result)
-
-# Test the calculate_profit function
-profit_result = logistics_optimizer.calculate_profit(sample_trucks[0], sample_loads[0])
-print(profit_result)
-
-# Test the check_preferences function
-preferences_result = logistics_optimizer.check_preferences(sample_trucks[0], sample_loads[0])
-print(preferences_result)
-
-# Test the select_trucks function
-selected_trucks = logistics_optimizer.select_trucks(sample_trucks, sample_loads[0])
-print(selected_trucks)
-
-# Test the select_loads function
-selected_loads = logistics_optimizer.select_loads(sample_trucks[0], sample_loads)
-print(selected_loads)
+])
