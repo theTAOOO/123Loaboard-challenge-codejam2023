@@ -3,6 +3,7 @@ from backend.io import MessageHandler
 from backend.structures import LoadBank
 from backend.structures import TruckBank
 
+
 class GlobalController:
     MQTTController = None
     MessageHandler = None
@@ -14,9 +15,7 @@ class GlobalController:
         self.MessageHandler = MessageHandler.MessageHandler(self)
         self.LoadBank = LoadBank.LoadBank(self)
         self.TruckBank = TruckBank.TruckBank(self)
-    
+
     def StartDay(self):
         self.TruckBank.DeleteAll()
         self.LoadBank.DeleteAll()
-
- 

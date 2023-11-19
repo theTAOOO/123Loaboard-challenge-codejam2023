@@ -1,4 +1,7 @@
 import pandas as pd
+from backend.io import LogisticsOptimizer
+from backend.structures import TruckBank
+
 
 class LoadBank:
     GlobalController = None
@@ -9,6 +12,7 @@ class LoadBank:
         columns = ['ID', 'Timestamp', 'OriginLatitude', 'OriginLongitude',
                    'DestinationLatitude', 'DestinationLongitude', 'Vehicle Type', 'Price', 'Mileage']
         self.load_list = pd.DataFrame(columns=columns)
+        self.logistics_optimizer = LogisticsOptimizer()
     
     def DeleteAll(self):
         self.load_list = self.load_list.drop(self.load_list.index)
@@ -25,10 +29,13 @@ class LoadBank:
                     'Vehicle Type': load["equipmentType"],
                     'Price': load["price"], 
                     'Mileage': load["mileage"], }
-        
+
         if new_load['ID'] in self.load_list['ID'].values:
             raise Exception("[FATAL]: LOAD MAGICALLY CHANGED LOCATION????")
             return
             # self.load_list.loc[self.load_list["ID"] == new_row['ID']] = list(new_row.values())
             # print("Updated existing truck!")
         self.load_list = pd.concat([self.load_list, pd.DataFrame([new_load])], ignore_index=True)
+
+        self.logistics_optimizer.select_loads(TruckBank.truck_list, new_load)
+
