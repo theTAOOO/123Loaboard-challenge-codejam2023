@@ -28,7 +28,7 @@ const App = () => {
         fontWeight: 'bold',
       }}
     >
-        Welcome back, Yumeng.
+        Welcome back, YuMeng.
       </div>
       <div
         style={{
