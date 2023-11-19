@@ -5,7 +5,9 @@ class MessageHandler:
 
     def __init__(self, global_controller):
         self.global_controller = global_controller
-
+#############################################################################
+# Handle MQTT server IO
+#############################################################################
     def HandleMQTTIncomingMessage(self, message_payload_str):
         message_payload = json.loads(message_payload_str)
         if "Truck" == message_payload["type"]:
@@ -40,6 +42,10 @@ class MessageHandler:
         # Do we even need to do anything?
         return
         raise Exception("[FATAL]: UNHANDLED END DAY REQ", message_payload)
+    
+#############################################################################
+# Handle React client IO
+#############################################################################
         
     def HandleFEIncomingMessage(self, message):
         # structure: [Get/Set, Truck, ID, etc]
