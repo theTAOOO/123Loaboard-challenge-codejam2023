@@ -19,5 +19,10 @@ class TruckBank:
                     'Latitude': truck["positionLatitude"],
                     'Longitude': truck["positionLongitude"],
                     'Vehicle Type': truck["equipType"],
-                    'Trip Preference': truck["nextTripLengthPreference"], }
-        self.truck_list = pd.concat([self.truck_list, pd.DataFrame([new_row])], ignore_index=True)
+                    'Trip Preference': truck["nextTripLengthPreference"] }
+        
+        if new_row['ID'] in self.truck_list['ID'].values:
+            self.truck_list.loc[self.truck_list["ID"] == new_row['ID']] = list(new_row.values())
+            print("Updated existing truck!")
+        else:
+            self.truck_list = pd.concat([self.truck_list, pd.DataFrame([new_row])], ignore_index=True)
