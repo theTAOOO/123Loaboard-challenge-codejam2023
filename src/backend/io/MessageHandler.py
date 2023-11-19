@@ -34,6 +34,9 @@ class MessageHandler:
         self.global_controller.LoadBank.AddLoad(message_payload)
         return
     def HandleStartMessage(self, message_payload):
+        self.global_controller.StartDay()
+        # raise Exception("[FATAL]: UNHANDLED START DAY REQ", message_payload)
         return
     def HandleEndDayMessage(self, message_payload):
+        raise Exception("[FATAL]: UNHANDLED END DAY REQ", message_payload)
         return
