@@ -36,4 +36,22 @@ class MessageHandler:
         return
     def HandleEndDayMessage(self, message_payload):
         raise Exception("[FATAL]: UNHANDLED END DAY REQ", message_payload)
+        
+    def HandleFEIncomingMessage(self, message):
+        if ("GET" == message[0]):
+            self.HandleFEGetMsg(message[1:])
+        elif ("SET" == message[0]):
+            self.HandleFESetMsg(message[1:])
+        else:
+            raise Exception("[FATAL]: UNKNOWN CLIENT MSG RECEIVED: ", message)
+    
+    def HandleFEGetMsg(self, message):
+        if ("Truck" == message[0]):
+            return
+        elif ("Load" == message[0]):
+            return
+        else:
+            raise Exception("[FATAL]: UNKNOWN CLIENT GET REQ: ", message)
+    
+    def HandleFESetMsg(self, message):
         return
