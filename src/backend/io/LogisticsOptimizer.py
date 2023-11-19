@@ -99,7 +99,7 @@ class LogisticsOptimizer:
         # We assume we're notifying the truck we're connected to
         truck_list = self.global_controller.TruckBank.truck_list
         emulated_truck_row = truck_list.loc[truck_list["ID"] == self.global_controller.EmulatedTruckID]
-        selected_loads = self.select_loads(emulated_truck_row)
+        selected_loads = self.select_loads(list(emulated_truck_row))
 
         for load in selected_loads:
             self.global_controller.MessageHandler.CreateOutgoingMsg(['SET', 'LOAD', load])
