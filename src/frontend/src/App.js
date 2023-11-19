@@ -1,5 +1,5 @@
 // App.js
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './index.css';
 import Map from './map';
 import swift from "./swifttrack.png";
@@ -12,8 +12,6 @@ const coordinates = [
 ];
 
 const App = () => {
-  const [message, setMessage] = useState('');
-  const [receivedMessage, setReceivedMessage] = useState('');
 
   return (
     <><div className="divmap">

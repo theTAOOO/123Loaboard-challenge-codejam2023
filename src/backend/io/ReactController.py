@@ -27,5 +27,5 @@ class ReactController:
 
     def say_hello(self):
         print('Client connected')
-        self.socketio.emit('message_from_server', 'Welcome to SwiftTrack!') 
+        self.socketio.emit('message_from_server', 'Welcome to SwiftTrack!')
     

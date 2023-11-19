@@ -1,8 +1,6 @@
 from datetime import datetime
 import json
 from paho.mqtt import client as mqtt_client
-from backend.io import MessageHandler
-from backend.structures import GlobalController
 import time
 
 class MQTTController:
