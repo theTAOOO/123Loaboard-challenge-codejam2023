@@ -28,9 +28,9 @@ class GlobalController:
         while(self.TruckBank.truck_list.empty):
             time.sleep(1)
 
-        emulated_truck = self.TruckBank.truck_list.head(0)
-        self.EmulatedTruckID = emulated_truck["ID"]
-        return ['SET', 'TRUCK', list(emulated_truck)]
+        emulated_truck = self.TruckBank.truck_list.iloc[0]
+        self.EmulatedTruckID = int(emulated_truck["ID"])
+        return self.MessageHandler.CreateOutgoingMsg(['SET', 'TRUCK', list(emulated_truck)])
 
 
  

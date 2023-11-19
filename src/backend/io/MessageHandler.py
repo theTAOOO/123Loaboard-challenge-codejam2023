@@ -72,9 +72,13 @@ class MessageHandler:
         return
     
     def CreateOutgoingMsg(self, message):
-        if ("SET" != message[0]):
-            raise Exception("[FATAL]: UNKNOWN OUTGOING REQ: ", message)
-        if ("LOAD" != message[1]):
-            raise Exception("[FATAL]: UNKNOWN OUTGOING REQ: ", message)
+        if ("SET" == message[0]):
+            if ("TRUCK" == message[1] or "LOAD" == message[1] or "UPD" == message[1]):
+                self.global_controller.ReactController.send_msg(message)
+                return
+            
+        raise Exception("[FATAL]: UNKNOWN OUTGOING REQ: ", message)
 
-        self.global_controller.ReactController.send_load(message[2])
+
+                
+

@@ -29,5 +29,5 @@ class ReactController:
         print('Client connected')
         self.socketio.emit('message_from_server', 'Welcome to SwiftTrack!')
     
-    def send_load(self, load):
-        self.socketio.emit('message_from_server', ['SET', 'LOAD', load])
+    def send_msg(self, load):
+        self.socketio.emit('message_from_server', load)
