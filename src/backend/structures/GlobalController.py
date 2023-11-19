@@ -6,7 +6,6 @@ from backend.structures import LoadBank
 from backend.structures import TruckBank
 import time
 
-
 class GlobalController:
     LogisticsOptimizer = None
     MessageHandler = None
@@ -41,6 +40,3 @@ class GlobalController:
         # Wait for them to receive it
         time.sleep(1)
         self.LogisticsOptimizer.UpdateLoads()
-
-
- 
