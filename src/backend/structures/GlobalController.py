@@ -12,11 +12,11 @@ class GlobalController:
     LoadBank = None
 
     def __init__(self):
-        self.ReactController = ReactController.ReactController(self)
-        self.MQTTController = MQTTController.MQTTController(self)
         self.MessageHandler = MessageHandler.MessageHandler(self)
         self.LoadBank = LoadBank.LoadBank(self)
         self.TruckBank = TruckBank.TruckBank(self)
+        self.MQTTController = MQTTController.MQTTController(self)
+        self.ReactController = ReactController.ReactController(self)
     
     def StartDay(self):
         self.TruckBank.DeleteAll()

@@ -1,7 +1,4 @@
 import json
-from backend.structures import GlobalController
-from backend.structures import TruckBank
-from backend.structures import LoadBank
 
 class MessageHandler:
     global_controller = None
@@ -9,7 +6,7 @@ class MessageHandler:
     def __init__(self, global_controller):
         self.global_controller = global_controller
 
-    def HandleIncomingMessage(self, message_payload_str):
+    def HandleMQTTIncomingMessage(self, message_payload_str):
         message_payload = json.loads(message_payload_str)
         if ("Truck" == message_payload["type"]):
             print("New Truck!")
@@ -39,4 +36,22 @@ class MessageHandler:
         return
     def HandleEndDayMessage(self, message_payload):
         raise Exception("[FATAL]: UNHANDLED END DAY REQ", message_payload)
+        
+    def HandleFEIncomingMessage(self, message):
+        if ("GET" == message[0]):
+            self.HandleFEGetMsg(message[1:])
+        elif ("SET" == message[0]):
+            self.HandleFESetMsg(message[1:])
+        else:
+            raise Exception("[FATAL]: UNKNOWN CLIENT MSG RECEIVED: ", message)
+    
+    def HandleFEGetMsg(self, message):
+        if ("Truck" == message[0]):
+            return
+        elif ("Load" == message[0]):
+            return
+        else:
+            raise Exception("[FATAL]: UNKNOWN CLIENT GET REQ: ", message)
+    
+    def HandleFESetMsg(self, message):
         return

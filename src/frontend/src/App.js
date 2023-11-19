@@ -1,9 +1,11 @@
 // App.js
+
+import React, { useEffect, useState } from 'react';
 import './index.css';
 import React from 'react';
 import Map from './map';
 import swift from "./swifttrack.png";
-
+import SocketComponent from './SocketComponent';
 
 const coordinates = [
   { lat: 37.7749, lng: -122.4194 }, // San Francisco
@@ -12,8 +14,16 @@ const coordinates = [
 ];
 
 const App = () => {
+
   return (
     <><div >
+
+  const [message, setMessage] = useState('');
+  const [receivedMessage, setReceivedMessage] = useState('');
+
+  return (
+    <><div className="divmap">
+      <SocketComponent />
       <Map coordinates={coordinates}/>
     </div><div
       style={{
