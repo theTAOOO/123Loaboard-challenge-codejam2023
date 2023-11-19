@@ -1,8 +1,10 @@
 import sys
+
 sys.path.append('src')
 
 from backend.structures import GlobalController
 import threading
+
 
 def main():
     my_controller = GlobalController.GlobalController()
@@ -12,6 +14,7 @@ def main():
 
     main_thread.start()
     flask_thread.start()
+
 
 if __name__ == "__main__":
     main()

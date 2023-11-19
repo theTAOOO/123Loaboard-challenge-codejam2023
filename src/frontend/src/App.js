@@ -1,6 +1,7 @@
 // App.js
 import React from 'react';
 import './index.css';
+import React from 'react';
 import Map from './map';
 import swift from "./swifttrack.png";
 import SocketComponent from './SocketComponent';
@@ -17,7 +18,7 @@ const App = () => {
     <><div className="divmap">
       <SocketComponent />
       <Map coordinates={coordinates}/>
-    </div><div className="divmap"
+    </div><div
       style={{
         position: 'absolute',
         top: '5%',
@@ -30,7 +31,7 @@ const App = () => {
         fontWeight: 'bold',
       }}
     >
-        Welcome back, Yumeng.
+        Welcome back, YuMeng.
       </div>
       <div
         style={{
