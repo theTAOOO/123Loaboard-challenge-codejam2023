@@ -1,5 +1,6 @@
 import json
 import googlemaps
+import os
 from backend.structures import GlobalController
 
 
@@ -70,3 +71,41 @@ class LogisticsOptimizer:
                     to_pick_up.append(load)
         sorted_loads = sorted(to_pick_up, key=self.calculate_profit, reverse=True)
         return sorted_loads
+
+
+# Sample data for testing
+sample_trucks = [
+    # Sample truck data: [truck_id, truck_type, origin_lat, origin_lng, capacity, preference]
+    [326, '2023-11-18T20:25:41', 32.736137, -85.289268, 'Flatbed', 'Short'],
+    [339, '2023-11-18T20:26:48', 40.966309, -75.983070, 'Van', 'Short'],
+    [101, '2023-11-18T20:28:01', 39.171665, -85.958260, 'Reefer', 'Long']
+]
+
+sample_loads = [
+    [101, 'Goods', 34.0522, -118.2437, 34.0522, -118.2437, 'Long', 500, 300],
+    [102, 'Furniture', 34.0522, -118.2437, 34.0522, -118.2437, 'Short', 800, 150],
+    # Add more sample loads as needed
+]
+
+# Instantiate the LogisticsOptimizer class
+logistics_optimizer = LogisticsOptimizer()
+
+# Test the calculate_distance function
+distance_result = logistics_optimizer.calculate_distance((34.0522, -118.2437), (34.0522, -118.2437))
+print(distance_result)
+
+# Test the calculate_profit function
+profit_result = logistics_optimizer.calculate_profit(sample_trucks[0], sample_loads[0])
+print(profit_result)
+
+# Test the check_preferences function
+preferences_result = logistics_optimizer.check_preferences(sample_trucks[0], sample_loads[0])
+print(preferences_result)
+
+# Test the select_trucks function
+selected_trucks = logistics_optimizer.select_trucks(sample_trucks, sample_loads[0])
+print(selected_trucks)
+
+# Test the select_loads function
+selected_loads = logistics_optimizer.select_loads(sample_trucks[0], sample_loads)
+print(selected_loads)
