@@ -12,7 +12,7 @@ class LoadBank:
         columns = ['ID', 'Timestamp', 'OriginLatitude', 'OriginLongitude',
                    'DestinationLatitude', 'DestinationLongitude', 'Vehicle Type', 'Price', 'Mileage']
         self.load_list = pd.DataFrame(columns=columns)
-        self.logistics_optimizer = LogisticsOptimizer()
+        # self.logistics_optimizer = LogisticsOptimizer()
     
     def DeleteAll(self):
         self.load_list = self.load_list.drop(self.load_list.index)
@@ -37,5 +37,5 @@ class LoadBank:
             # print("Updated existing truck!")
         self.load_list = pd.concat([self.load_list, pd.DataFrame([new_load])], ignore_index=True)
 
-        self.logistics_optimizer.select_loads(TruckBank.truck_list, new_load)
+        # self.logistics_optimizer.select_loads(TruckBank.truck_list, new_load)
 

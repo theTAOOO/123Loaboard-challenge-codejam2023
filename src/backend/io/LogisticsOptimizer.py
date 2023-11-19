@@ -33,10 +33,22 @@ class LogisticsOptimizer:
         load_travel_time = (load[8]) / 65 + idle_distance[2]
         return (load[7] - expenses) / load_travel_time
 
+    @staticmethod
+    def check_preferences(truck, load):
+        if int(load[8]) > 200:
+            load_travel_type = "Long"
+        else:
+            load_travel_type = "Short"
+        trucker_preference = truck[5]
+        if trucker_preference == load_travel_type:
+            return True
+        else:
+            return False
+
     def select_trucks(self, truck_bank, load):
         to_notify = []
         for truck in truck_bank:
-            if truck[5] != load[6]:
+            if (truck[5] != load[6]) or (self.check_preferences(truck, load)):
                 continue
             else:
                 if self.calculate_profit(truck, load) < 0:
@@ -49,7 +61,7 @@ class LogisticsOptimizer:
     def select_loads(self, truck, load_bank):
         to_pick_up = []
         for load in load_bank:
-            if truck[5] != load[6]:
+            if (truck[5] != load[6]) or (self.check_preferences(truck, load)):
                 continue
             else:
                 if self.calculate_profit(truck, load) < 0:
@@ -58,5 +70,3 @@ class LogisticsOptimizer:
                     to_pick_up.append(load)
         sorted_loads = sorted(to_pick_up, key=self.calculate_profit, reverse=True)
         return sorted_loads
-
-
