@@ -10,8 +10,6 @@ const Map = ({ coordinates, title }) => {
   const mapStyles = {
     height: '100vh',
     width: '100vw',
-    margin: '0',
-    padding: '0',
   };
 
   const defaultCenter = {
@@ -426,6 +424,7 @@ const Map = ({ coordinates, title }) => {
             <Marker
             key={index}
             position={{ lat: coord.lat, lng: coord.lng }}
+            
             />
         );
         })}
