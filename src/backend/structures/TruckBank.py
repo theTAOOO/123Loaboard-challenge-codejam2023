@@ -1,4 +1,8 @@
 import pandas as pd
+from backend.io import LogisticsOptimizer
+from backend.structures import LoadBank
+
+
 
 class TruckBank:
     GlobalController = None
@@ -8,6 +12,7 @@ class TruckBank:
         self.global_controller = global_controller
         columns = ['ID', 'Timestamp', 'Latitude', 'Longitude', 'Vehicle Type', 'Trip Preference']
         self.truck_list = pd.DataFrame(columns=columns)
+        # self.logistics_optimizer = LogisticsOptimizer()
     
     def DeleteAll(self):
         self.truck_list = self.truck_list.drop(self.truck_list.index)
@@ -28,3 +33,5 @@ class TruckBank:
             return
         
         self.truck_list = pd.concat([self.truck_list, pd.DataFrame([new_truck])], ignore_index=True)
+
+        # self.logistics_optimizer.select_loads(new_truck, LoadBank.load_list)
