@@ -2,8 +2,6 @@ import pandas as pd
 from backend.io import LogisticsOptimizer
 from backend.structures import LoadBank
 
-
-
 class TruckBank:
     global_controller = None
     truck_list = None
@@ -37,5 +35,3 @@ class TruckBank:
             return
         
         self.truck_list = pd.concat([self.truck_list, pd.DataFrame([new_truck])], ignore_index=True)
-
-        # self.logistics_optimizer.select_loads(new_truck, LoadBank.load_list)

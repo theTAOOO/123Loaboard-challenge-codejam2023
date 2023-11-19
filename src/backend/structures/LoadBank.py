@@ -2,7 +2,6 @@ import pandas as pd
 from backend.io import LogisticsOptimizer
 from backend.structures import TruckBank
 
-
 class LoadBank:
     global_controller = None
     load_list = None

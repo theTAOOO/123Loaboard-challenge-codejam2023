@@ -1,6 +1,5 @@
 import json
 
-
 class MessageHandler:
     global_controller = None
 
@@ -35,10 +34,10 @@ class MessageHandler:
     
     def HandleStartMessage(self, message_payload):
         self.global_controller.StartDay()
-        # raise Exception("[FATAL]: UNHANDLED START DAY REQ", message_payload)
         return
     
     def HandleEndDayMessage(self, message_payload):
+        # Do we even need to do anything?
         return
         raise Exception("[FATAL]: UNHANDLED END DAY REQ", message_payload)
         
@@ -79,7 +78,3 @@ class MessageHandler:
                 return
             
         raise Exception("[FATAL]: UNKNOWN OUTGOING REQ: ", message)
-
-
-                
-
